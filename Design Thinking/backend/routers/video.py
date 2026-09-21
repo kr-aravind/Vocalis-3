@@ -6,8 +6,8 @@ import re
 import json
 import logging
 from typing import Optional
-from ..utils.groq import transcribe_audio, chat_completion
-from ..utils.supabase_client import safe_db_insert
+from utils.groq import transcribe_audio, chat_completion
+from utils.supabase_client import safe_db_insert
 
 logger = logging.getLogger(__name__)
 
