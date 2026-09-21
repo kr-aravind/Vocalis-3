@@ -30,7 +30,7 @@ app.mount("/static", StaticFiles(directory=static_dir, html=False), name="static
 # Root endpoint serves index.html
 @app.get("/")
 async def read_root():
-    index_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "index.html"))
+    index_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "index.html"))
     return FileResponse(index_path)
 
 @app.get("/health")
