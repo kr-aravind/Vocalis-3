@@ -2,7 +2,7 @@ from fastapi import APIRouter, UploadFile, File, HTTPException
 import os
 import shutil
 import uuid
-from ..utils.supabase_client import upload_file
+from utils.supabase_client import upload_file
 
 router = APIRouter()
 
