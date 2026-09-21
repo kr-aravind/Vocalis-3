@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 import os
-from .routers import script, video, impromptu, pronunciation, upload
+from routers import script, video, impromptu, pronunciation, upload
 
 app = FastAPI(title="Vocalis API", description="AI Communication & Public Speaking Coach API", version="1.0.0")
 
