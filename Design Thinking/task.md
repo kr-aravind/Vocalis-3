@@ -1,0 +1,9 @@
+- `[x]` Create `index.html` structure with navigation and main views.
+- `[x]` Create `index.css` with a premium dark mode design system, glassmorphism, and responsive layouts.
+- `[x]` Create `app.js` with logic for navigation, media recording, timers, and mocked data rendering.
+- `[x]` Implement Script Analysis & Tone Refinement UI.
+- `[x]` Implement Video & Audio Session Assessment UI.
+- `[x]` Implement "Speak a Minute" Impromptu Mode UI (Topic roulette, timer).
+- `[x]` Implement Pronunciation Repair Loop and Dashboard UI.
+- `[x]` Verify local functionality.
+- `[ ]` Create walkthrough.md.

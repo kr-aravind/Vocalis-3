@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocalis - AI Communication & Public Speaking Coach</title>
+    <link rel="stylesheet" href="/static/index.css">
+    <link rel="stylesheet" href="index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-wrapper">
+        <!-- Top Navigation -->
+        <header class="top-header">
+            <div class="brand">
+                <img src="/static/vocalis_logo.jpg" onerror="this.src='vocalis_logo.jpg'" alt="Vocalis Logo" class="brand-logo">
+                <h2>Vocalis</h2>
+            </div>
+            
+            <nav class="pill-nav">
+                <a href="#" class="nav-item active" data-target="dashboard"><i class="fa-solid fa-chart-pie"></i> Dashboard</a>
+                <a href="#" class="nav-item" data-target="script-analysis"><i class="fa-solid fa-file-lines"></i> Script Analysis</a>
+                <a href="#" class="nav-item" data-target="video-assessment"><i class="fa-solid fa-video"></i> Session Assessment</a>
+                <a href="#" class="nav-item" data-target="impromptu-mode"><i class="fa-solid fa-bolt"></i> Impromptu Mode</a>
+                <a href="#" class="nav-item" data-target="pronunciation-repair"><i class="fa-solid fa-microphone-lines"></i> Pronunciation</a>
+            </nav>
+            
+            <div class="header-actions">
+                <button class="icon-btn-small" id="notification-btn" title="Notifications"><i class="fa-regular fa-bell"></i></button>
+                <div class="avatar" title="Executive Profile"></div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Dashboard View -->
+            <section id="dashboard" class="view active">
+                <header class="section-header">
+                    <h1>Analytics & Cross-Session Continuity</h1>
+                    <p>Track your vocal resonance, delivery clarity, and confidence over time.</p>
+                </header>
+                
+                <div class="dashboard-grid">
+                    <div class="card dark-card metric-card">
+                        <h3>Vocal Clarity</h3>
+                        <div class="metric">92% <span class="trend positive"><i class="fa-solid fa-arrow-up"></i> 4%</span></div>
+                        <p class="card-subtext">Optimal pitch resonance & articulation</p>
+                    </div>
+                    <div class="card dark-card metric-card">
+                        <h3>Posture Stability</h3>
+                        <div class="metric">88% <span class="trend positive"><i class="fa-solid fa-arrow-up"></i> 2%</span></div>
+                        <p class="card-subtext">Solid center of gravity & framing</p>
+                    </div>
+                    <div class="card dark-card metric-card">
+                        <h3>Filler Words</h3>
+                        <div class="metric">12 <span class="trend negative"><i class="fa-solid fa-arrow-down"></i> 3</span></div>
+                        <p class="card-subtext">28% reduction from previous week</p>
+                    </div>
+                    <div class="card dark-card chart-card span-3">
+                        <div class="chart-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+                            <h3 id="chart-title" style="margin: 0; color: var(--text-main); font-size: 1.1rem;">Weekly Analysis</h3>
+                            <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+                                <div class="chart-toggles hidden" id="monthly-range-toggles">
+                                    <button class="btn toggle-btn active" id="chart-h1-btn">Jan - Jun</button>
+                                    <button class="btn toggle-btn" id="chart-h2-btn">Jul - Dec</button>
+                                </div>
+                                <div class="chart-toggles">
+                                    <button class="btn toggle-btn active" id="chart-weekly-btn">Weekly</button>
+                                    <button class="btn toggle-btn" id="chart-monthly-btn">Monthly</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-container" style="position: relative; height: 250px; width: 100%;">
+                            <canvas id="trendChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bottom Light Panel for details -->
+                <div class="bottom-panel light-panel mt-4">
+                    <div class="panel-header">
+                        <h3 style="color: var(--bg-dark);">Recent Sessions</h3>
+                        <div class="filter-pills" id="session-filters">
+                            <span class="filter-pill active" data-filter="all">All</span>
+                            <span class="filter-pill" data-filter="good">Good</span>
+                            <span class="filter-pill highlight" data-filter="needs-review">Needs Review</span>
+                        </div>
+                    </div>
+                    
+                    <div class="list-container" id="sessions-list">
+                        <div class="list-item" data-type="needs-review">
+                            <div class="list-info">
+                                <strong>Session #427-012 (Keynote Rehearsal)</strong>
+                                <span class="text-muted-light">Today, 2:30 PM • 4 filler words detected</span>
+                            </div>
+                            <div class="list-status warning-badge">Needs Review</div>
+                            <div class="list-score">85% Match</div>
+                            <button class="btn primary-btn-pill action-review-btn">Review Now</button>
+                        </div>
+                        <div class="list-item" data-type="good">
+                            <div class="list-info">
+                                <strong>Session #426-001 (Quarterly Sync)</strong>
+                                <span class="text-muted-light">Yesterday, 10:15 AM • Clean articulation</span>
+                            </div>
+                            <div class="list-status success-badge">Mastered</div>
+                            <div class="list-score">92% Match</div>
+                            <button class="btn secondary-btn-pill action-details-btn">Details</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Script Analysis View -->
+            <section id="script-analysis" class="view hidden">
+                <header class="section-header">
+                    <h1>Script Analysis & Tone Refinement</h1>
+                    <p>Analyze vocabulary strength, executive tone alignment, and rhetorical transitions.</p>
+                </header>
+                
+                <div class="split-layout">
+                    <div class="input-panel card dark-card">
+                        <div class="file-upload-container" style="margin-bottom: 1rem;">
+                            <label for="script-file" class="btn secondary-btn-pill" style="cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem;">
+                                <i class="fa-solid fa-cloud-arrow-up"></i> Upload Script (.pdf, .docx, .pptx, .txt)
+                            </label>
+                            <input type="file" id="script-file" accept=".pdf,.pptx,.txt,.docx" class="hidden">
+                            <span id="file-name-display" class="text-muted" style="display: block; margin-top: 0.5rem; font-size: 0.85rem;">No file chosen</span>
+                        </div>
+                        <div class="divider text-center text-muted" style="margin: 1rem 0; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;">Or Enter Directly</div>
+                        
+                        <label for="script-input" style="font-weight: 500; margin-bottom: 0.5rem; display: block;">Paste Your Script</label>
+                        <textarea id="script-input" placeholder="Paste your speech, pitch, or presentation script text here..."></textarea>
+                        
+                        <label for="tone-select" style="font-weight: 500; margin-top: 1rem; margin-bottom: 0.5rem; display: block;">Target Context</label>
+                        <select id="tone-select" class="pill-select">
+                            <option value="formal">Formal (Executive Board Meeting / Keynote)</option>
+                            <option value="semi-formal">Semi-Formal (Team All-Hands / Client Pitch)</option>
+                            <option value="casual">Casual (Podcast / Vlog / Interactive Q&A)</option>
+                        </select>
+
+                        <button id="analyze-script-btn" class="btn primary-btn-pill mt-4"><i class="fa-solid fa-wand-magic-sparkles"></i> Analyze Script</button>
+                    </div>
+                    <div class="output-panel card light-panel hidden" id="script-results">
+                        <div class="results-header" style="display: flex; justify-content: space-between; align-items: center;">
+                            <h3 style="color: var(--bg-dark); margin: 0;">AI Analysis Results</h3>
+                            <span class="badge" id="script-tone-badge" style="background: var(--primary); color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">FORMAL</span>
+                        </div>
+                        <div class="score-ring" style="text-align: center; margin: 1.5rem 0;">
+                            <h2 id="script-score-value" style="color: var(--primary); font-size: 2.75rem; margin: 0; font-weight: 700;">85% Match</h2>
+                            <p id="script-tone-summary" style="color: var(--text-muted-light); margin-top: 0.5rem;">Tone Alignment & Audience Resonance</p>
+                        </div>
+                        <div class="recommendations">
+                            <h4 class="mt-4" style="color: var(--bg-dark);"><i class="fa-solid fa-arrow-up-right-dots" style="color:var(--primary);"></i> Vocabulary Upgrades</h4>
+                            <ul class="suggestion-list" id="script-vocab-list" style="margin-top: 0.5rem; padding-left: 1.2rem; color: var(--bg-dark);">
+                                <li>Replace "good" with <strong style="color:var(--primary-dark)">"exceptional"</strong></li>
+                                <li>Replace "we want to do" with <strong style="color:var(--primary-dark)">"our objective is to execute"</strong></li>
+                            </ul>
+                            <h4 class="mt-4" style="color: var(--bg-dark);"><i class="fa-solid fa-route" style="color:var(--primary);"></i> Continuity & Transitions</h4>
+                            <p class="feedback-text text-muted-light" id="script-continuity-feedback">The transition between your introduction and technical thesis feels abrupt. Consider adding a bridging sentence.</p>
+                            <h4 class="mt-4" style="color: var(--bg-dark);"><i class="fa-solid fa-gauge-high" style="color:var(--primary);"></i> Pacing & Cadence</h4>
+                            <p class="feedback-text text-muted-light" id="script-pacing-feedback">Estimated 135-145 WPM. Add deliberate 2-second pauses after key figures.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Video Assessment View -->
+            <section id="video-assessment" class="view hidden">
+                <header class="section-header">
+                    <h1>Session Assessment Studio</h1>
+                    <p>Record or upload your speaking delivery for deep multi-modal vocal, filler words, and pronunciation assessment.</p>
+                </header>
+                
+                <div class="studio-layout">
+                    <!-- Recording & Studio Controls -->
+                    <div class="video-container card dark-card">
+                        <div class="video-wrapper" style="position: relative; width: 100%; border-radius: 16px; overflow: hidden; background: #000; min-height: 280px; display: flex; align-items: center; justify-content: center;">
+                            <video id="camera-preview" autoplay muted playsinline style="width: 100%; max-height: 400px; object-fit: cover;"></video>
+                            <video id="recorded-playback" controls class="hidden" style="width: 100%; max-height: 400px; object-fit: cover;"></video>
+                            <div id="camera-placeholder" style="position: absolute; text-align: center; color: var(--text-muted); padding: 1rem;">
+                                <i class="fa-solid fa-video-slash" style="font-size: 3rem; margin-bottom: 0.5rem; display: block;"></i>
+                                <span>Click "Enable Camera & Mic" or "Upload Media File" below</span>
+                            </div>
+                        </div>
+
+                        <!-- Live Audio Input Visualizer Meter -->
+                        <div id="mic-meter-container" class="mt-2 hidden" style="width: 100%; max-width: 420px; display: flex; align-items: center; gap: 0.75rem; background: rgba(0,0,0,0.5); padding: 0.45rem 1rem; border-radius: 50px; border: 1px solid rgba(255,255,255,0.1);">
+                            <i class="fa-solid fa-microphone" id="mic-icon-indicator" style="color: #22c55e; font-size: 0.95rem;"></i>
+                            <div style="flex: 1; height: 8px; background: rgba(255,255,255,0.15); border-radius: 4px; overflow: hidden;">
+                                <div id="mic-volume-fill" style="width: 0%; height: 100%; background: linear-gradient(90deg, #22c55e, #f97316, #ef4444); border-radius: 4px; transition: width 0.05s ease;"></div>
+                            </div>
+                            <span id="live-mic-text" style="font-size: 0.75rem; color: #94a3b8; min-width: 70px; font-weight: 600;">Mic Ready</span>
+                        </div>
+
+                        <!-- Action Controls -->
+                        <div class="controls mt-4" style="display: flex; gap: 0.75rem; align-items: center; justify-content: center; flex-wrap: wrap;">
+                            <button id="enable-camera-btn" class="btn secondary-btn-pill"><i class="fa-solid fa-camera"></i> Enable Camera & Mic</button>
+                            <label for="video-file-input" class="btn secondary-btn-pill" style="cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem;">
+                                <i class="fa-solid fa-file-video"></i> Upload Media File
+                            </label>
+                            <input type="file" id="video-file-input" accept="video/*,audio/*" class="hidden">
+                            <button id="demo-speech-btn" class="btn secondary-btn-pill" style="border: 1px dashed var(--primary); color: var(--primary);"><i class="fa-solid fa-flask"></i> Try Sample Speech</button>
+                            <button id="start-record-btn" class="btn primary-btn-pill hidden"><i class="fa-solid fa-circle" style="color: #ef4444;"></i> Start Recording</button>
+                            <button id="stop-record-btn" class="btn danger-btn-pill hidden"><i class="fa-solid fa-square"></i> Stop Recording</button>
+                            <span id="recording-timer" class="timer" style="font-weight: 700; font-size: 1.1rem; min-width: 60px; text-align: center;">00:00</span>
+                            <button id="submit-video-btn" class="btn primary-btn-pill hidden"><i class="fa-solid fa-wand-magic-sparkles"></i> Submit for AI Assessment</button>
+                            <button id="re-record-btn" class="btn secondary-btn-pill hidden"><i class="fa-solid fa-rotate-left"></i> Re-record</button>
+                        </div>
+                        <span id="media-file-name" class="text-muted" style="margin-top: 0.5rem; font-size: 0.85rem; display: block; text-align: center;"></span>
+                    </div>
+                    
+                    <!-- Comprehensive AI Session Diagnostic & Recommendations Dashboard -->
+                    <div id="assessment-results" class="results-panel card light-panel hidden" style="margin-top: 1rem;">
+                        <!-- Header Score Card -->
+                        <div class="assessment-header-bar" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 1.25rem; flex-wrap: wrap; gap: 1rem;">
+                            <div>
+                                <h2 style="color: var(--bg-dark); margin: 0; font-size: 1.6rem; font-weight: 800;"><i class="fa-solid fa-chart-line" style="color:var(--primary);"></i> AI Session Diagnostic Report</h2>
+                                <p id="assessment-summary-text" style="color: var(--text-muted-light); margin-top: 0.35rem; font-size: 0.95rem;">Comprehensive speech analysis and executive delivery evaluation.</p>
+                            </div>
+                            <div class="score-pill-container" style="display: flex; align-items: center; gap: 0.75rem; background: #f8fafc; padding: 0.5rem 1.25rem; border-radius: 50px; border: 1px solid #cbd5e1;">
+                                <span style="font-size: 0.85rem; font-weight: 600; color: #64748b;">Overall Delivery:</span>
+                                <span id="assessment-overall-score" style="font-size: 1.75rem; font-weight: 800; color: var(--primary);">86%</span>
+                            </div>
+                        </div>
+
+                        <!-- Multi-Modal Delivery Metrics Grid -->
+                        <div class="metrics-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+                            <div class="metric-item dark-card" style="padding: 1.2rem; border-radius: 16px; text-align: center;">
+                                <i class="fa-solid fa-gauge-high" style="color:var(--primary); font-size: 1.5rem; margin-bottom: 0.4rem; display:block;"></i>
+                                <span class="label" style="display:block; color:var(--text-muted); font-size:0.8rem; font-weight: 500;">Pace</span>
+                                <span class="value" id="metric-pace" style="font-weight:bold; font-size:1.3rem; color: #fff;">142 WPM</span>
+                                <span class="badge mt-2" id="metric-pace-badge" style="display: inline-block; background: rgba(249, 115, 22, 0.2); color: #fb923c; font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 20px;">Ideal Speed</span>
+                            </div>
+                            <div class="metric-item dark-card" style="padding: 1.2rem; border-radius: 16px; text-align: center;">
+                                <i class="fa-solid fa-eye" style="color:#22c55e; font-size: 1.5rem; margin-bottom: 0.4rem; display:block;"></i>
+                                <span class="label" style="display:block; color:var(--text-muted); font-size:0.8rem; font-weight: 500;">Eye Contact</span>
+                                <span class="value" id="metric-eye-contact" style="font-weight:bold; font-size:1.3rem; color: #fff;">88%</span>
+                                <span class="badge mt-2" style="display: inline-block; background: rgba(34, 197, 94, 0.2); color: #4ade80; font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 20px;">Strong Focus</span>
+                            </div>
+                            <div class="metric-item dark-card" style="padding: 1.2rem; border-radius: 16px; text-align: center;">
+                                <i class="fa-solid fa-comment-dots" style="color:#f59e0b; font-size: 1.5rem; margin-bottom: 0.4rem; display:block;"></i>
+                                <span class="label" style="display:block; color:var(--text-muted); font-size:0.8rem; font-weight: 500;">Filler Words</span>
+                                <span class="value" id="metric-filler-words" style="font-weight:bold; font-size:1.3rem; color: #fff;">4 detected</span>
+                                <span class="badge mt-2" id="metric-filler-density" style="display: inline-block; background: rgba(245, 158, 11, 0.2); color: #fcd34d; font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 20px;">4.2% Density</span>
+                            </div>
+                            <div class="metric-item dark-card" style="padding: 1.2rem; border-radius: 16px; text-align: center;">
+                                <i class="fa-solid fa-microphone-lines" style="color:#38bdf8; font-size: 1.5rem; margin-bottom: 0.4rem; display:block;"></i>
+                                <span class="label" style="display:block; color:var(--text-muted); font-size:0.8rem; font-weight: 500;">Vocal Clarity</span>
+                                <span class="value" id="metric-vocal-clarity" style="font-weight:bold; font-size:1.3rem; color: #fff;">85%</span>
+                                <span class="badge mt-2" style="display: inline-block; background: rgba(56, 189, 248, 0.2); color: #7dd3fc; font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 20px;">Clear Resonance</span>
+                            </div>
+                        </div>
+
+                        <!-- Interactive Speech Transcript with Annotations -->
+                        <div class="transcript-section mt-4" style="background: #f8fafc; padding: 1.5rem; border-radius: 18px; border: 1px solid #e2e8f0;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
+                                <h3 style="color: var(--bg-dark); margin: 0; font-size: 1.15rem;"><i class="fa-solid fa-align-left" style="color:var(--primary);"></i> Annotated Speech Transcript</h3>
+                                <div class="transcript-legend" style="display: flex; gap: 0.75rem; font-size: 0.8rem;">
+                                    <span style="display: inline-flex; align-items: center; gap: 0.3rem;"><span style="display:inline-block; width:12px; height:12px; border-radius:3px; background:#fed7aa; border:1px solid #f97316;"></span> Filler Word</span>
+                                    <span style="display: inline-flex; align-items: center; gap: 0.3rem;"><span style="display:inline-block; width:12px; height:12px; border-radius:3px; background:#fecdd3; border:1px solid #f43f5e;"></span> Pronunciation Issue</span>
+                                </div>
+                            </div>
+                            <div id="video-annotated-transcript" style="font-size: 1.05rem; line-height: 1.8; color: #1e293b; font-style: normal; padding: 1rem; background: #ffffff; border-radius: 12px; border: 1px solid #cbd5e1;">
+                                "Good morning everyone, <mark class="filler-highlight">um</mark>, we are <mark class="filler-highlight">basically</mark> looking forward to a, <mark class="filler-highlight">like</mark>, <mark class="pron-highlight">paradigm</mark> shift in our architecture, <mark class="filler-highlight">uh</mark>, to maintain total <mark class="pron-highlight">hierarchy</mark> alignment."
+                            </div>
+                        </div>
+
+                        <!-- Two-Column Section: Filler Breakdown & Pronunciation Errors -->
+                        <div class="split-layout mt-4" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;">
+                            <!-- Filler Words Breakdown -->
+                            <div class="filler-diagnostic-card" style="background: #fff7ed; padding: 1.5rem; border-radius: 18px; border: 1px solid #ffedd5;">
+                                <h3 style="color: #9a3412; margin-bottom: 0.75rem; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem;">
+                                    <i class="fa-solid fa-filter"></i> Filler Words Frequency & Coaching
+                                </h3>
+                                <div id="filler-breakdown-container" style="display: flex; flex-direction: column; gap: 0.6rem;">
+                                    <div class="filler-item" style="display: flex; justify-content: space-between; align-items: center; background: #ffffff; padding: 0.6rem 1rem; border-radius: 10px; border: 1px solid #fed7aa;">
+                                        <div>
+                                            <strong style="color: #c2410c; font-size: 1rem;">"um"</strong>
+                                            <span style="font-size: 0.8rem; color: #78350f; display: block;">Replace with a 1-second pause</span>
+                                        </div>
+                                        <span class="badge" style="background: #ea580c; color: white; padding: 0.25rem 0.6rem; border-radius: 20px; font-weight: bold; font-size: 0.85rem;">2x</span>
+                                    </div>
+                                    <div class="filler-item" style="display: flex; justify-content: space-between; align-items: center; background: #ffffff; padding: 0.6rem 1rem; border-radius: 10px; border: 1px solid #fed7aa;">
+                                        <div>
+                                            <strong style="color: #c2410c; font-size: 1rem;">"like"</strong>
+                                            <span style="font-size: 0.8rem; color: #78350f; display: block;">Use deliberate breath before noun</span>
+                                        </div>
+                                        <span class="badge" style="background: #ea580c; color: white; padding: 0.25rem 0.6rem; border-radius: 20px; font-weight: bold; font-size: 0.85rem;">1x</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pronunciation Errors Detected -->
+                            <div class="pronunciation-diagnostic-card" style="background: #fff1f2; padding: 1.5rem; border-radius: 18px; border: 1px solid #ffe4e6;">
+                                <h3 style="color: #9f1239; margin-bottom: 0.75rem; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem;">
+                                    <i class="fa-solid fa-triangle-exclamation"></i> Flagged Pronunciation & Articulation
+                                </h3>
+                                <div id="pronunciation-errors-container" style="display: flex; flex-direction: column; gap: 0.6rem;">
+                                    <div class="pron-error-item" style="background: #ffffff; padding: 0.75rem 1rem; border-radius: 10px; border: 1px solid #fecdd3;">
+                                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                            <div>
+                                                <strong style="color: #be123c; font-size: 1.05rem;">Paradigm</strong>
+                                                <span style="display: block; font-size: 0.85rem; color: #475569; font-family: monospace;">Target: /ˈpær.ə.daɪm/</span>
+                                                <span style="display: block; font-size: 0.8rem; color: #881337; margin-top: 0.2rem;">Silent 'g' was voiced. Focus on smooth vowel transition.</span>
+                                            </div>
+                                            <button class="btn primary-btn-pill practice-word-btn" data-word="paradigm" style="padding: 0.35rem 0.8rem; font-size: 0.8rem;">
+                                                <i class="fa-solid fa-microphone"></i> Practice
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- AI Coaching Action Plan & Recommendations -->
+                        <div class="recommendations-card mt-4" style="background: #f8fafc; padding: 1.5rem; border-radius: 18px; border: 1px solid #e2e8f0;">
+                            <h3 style="color: var(--bg-dark); margin-bottom: 0.75rem; font-size: 1.15rem;">
+                                <i class="fa-solid fa-lightbulb" style="color:var(--primary);"></i> Executive Coaching Action Plan
+                            </h3>
+                            <ul id="assessment-recommendations-list" style="margin: 0; padding-left: 1.25rem; color: #334155; line-height: 1.7; font-size: 0.95rem;">
+                                <li>Replace verbal crutches ('um', 'like') with clean 1.5-second strategic pauses.</li>
+                                <li>Rehearse silent-consonant terminology ('paradigm') in the Pronunciation Repair tab.</li>
+                                <li>Maintain steady vocal projection through clause endings.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="action-footer mt-4" style="display: flex; gap: 1rem; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                            <button id="nav-to-pronunciation-btn" class="btn primary-btn-pill" style="padding: 0.8rem 1.75rem;">
+                                <i class="fa-solid fa-microphone-lines"></i> Open Pronunciation Repair Lab
+                            </button>
+                            <button id="re-analyze-btn" class="btn secondary-btn-pill text-dark" style="border-color: #cbd5e1;">
+                                <i class="fa-solid fa-rotate-left"></i> Analyze New Session
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Impromptu Mode View -->
+            <section id="impromptu-mode" class="view hidden">
+                <header class="section-header">
+                    <h1>"Speak a Minute" Impromptu Mode</h1>
+                    <p>Sharpen your quick-thinking, structure impromptu speeches on the fly, and practice under time pressure.</p>
+                </header>
+                
+                <div class="roulette-container card dark-card text-center" style="padding: 2.5rem 1.5rem;">
+                    <div class="roulette-wheel" id="topic-display" style="padding: 2rem; border-radius: 16px; border: 2px dashed #4b5563; font-size: 1.3rem; font-weight: 600; min-height: 90px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">
+                        Click "Spin Roulette" to draw an executive speech topic
+                    </div>
+                    <button id="spin-topic-btn" class="btn primary-btn-pill pulse mt-4" style="font-size: 1.1rem; padding: 0.8rem 2rem;">
+                        <i class="fa-solid fa-arrows-rotate"></i> Spin Roulette
+                    </button>
+                </div>
+
+                <div id="prep-window" class="prep-window card light-panel hidden mt-4">
+                    <div class="timer-display" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-size: 1.5rem; font-weight: 700; color: var(--primary-dark);">
+                        <i class="fa-regular fa-clock"></i> <span id="prep-timer">01:00</span>
+                    </div>
+                    <h3 class="mt-4" style="color: var(--bg-dark); text-align: center;"><i class="fa-solid fa-brain" style="color:var(--primary);"></i> AI Research Assistant</h3>
+                    <div class="research-pills" id="research-pills-container" style="margin: 1rem 0; display:flex; gap:0.75rem; justify-content:center; flex-wrap: wrap;">
+                        <span class="pill" style="background:var(--bg-dark); color:white; padding: 0.5rem 1.2rem; border-radius: 50px; font-size:0.9rem;">Augmented Creativity</span>
+                        <span class="pill" style="background:var(--bg-dark); color:white; padding: 0.5rem 1.2rem; border-radius: 50px; font-size:0.9rem;">Human-in-the-Loop</span>
+                        <span class="pill" style="background:var(--primary-dark); color:white; padding: 0.5rem 1.2rem; border-radius: 50px; font-size:0.9rem;">78% Adoption Rate</span>
+                    </div>
+                    <div style="background: #f8fafc; padding: 1rem; border-radius: 12px; margin: 1rem 0;">
+                        <h4 style="color: var(--bg-dark); margin-bottom: 0.4rem;">Speech Outline Suggestion:</h4>
+                        <p class="research-summary text-muted-light" id="research-outline-text" style="color: #475569; margin: 0; line-height: 1.5;">
+                            1. Hook: Frame AI as a thought partner. 2. Core: Real-world workflows. 3. Call to Action: Focus on creative taste.
+                        </p>
+                    </div>
+                    <div style="text-align: center;">
+                        <button id="start-impromptu-record" class="btn primary-btn-pill mt-4"><i class="fa-solid fa-microphone"></i> I'm Ready - Record Speech</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Pronunciation Repair View -->
+            <section id="pronunciation-repair" class="view hidden">
+                <header class="section-header">
+                    <h1>Pronunciation Repair Loop</h1>
+                    <p>Listen, practice, and eliminate mispronunciations detected in your speaking sessions.</p>
+                </header>
+                <div class="repair-container card dark-card">
+                    <div class="transcript-box" style="padding: 1.5rem; background: var(--bg-darker); border-radius:16px; font-size: 1.1rem; line-height: 1.6; font-style: italic;">
+                        <p id="pronunciation-context-quote">"...and we are looking forward to a <span class="error-word active" data-word="paradigm" style="color: #f97316; text-decoration: underline; cursor: pointer; font-weight: bold;">paradigm</span> shift in the industry, maintaining total <span class="error-word" data-word="hierarchy" style="color: #f97316; text-decoration: underline; cursor: pointer;">hierarchy</span> alignment..."</p>
+                    </div>
+                    
+                    <div class="repair-action mt-4" style="text-align: center;">
+                        <h3 style="font-size: 1.5rem;">Target Word: <strong id="target-word-display" style="color: var(--primary);">Paradigm</strong></h3>
+                        <p class="phonetics mt-2" id="target-phonetics-display" style="color: var(--text-muted); font-family: monospace; font-size: 1.2rem;">/ˈpær.ə.daɪm/</p>
+                        
+                        <div class="audio-controls mt-4">
+                            <button class="icon-btn" id="listen-pronunciation-btn" title="Listen to correct pronunciation" style="background: var(--primary); color: white; width: 50px; height: 50px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; border: none; transition: transform 0.2s;">
+                                <i class="fa-solid fa-volume-high"></i>
+                            </button>
+                            <span style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-top: 0.4rem;">Listen to AI pronunciation</span>
+                        </div>
+                        
+                        <div class="retry-box mt-4" style="max-width: 480px; margin-left: auto; margin-right: auto;">
+                            <button id="retry-pronunciation-btn" class="btn primary-btn-pill mt-4" style="width: 100%; justify-content: center; font-size: 1.1rem;">
+                                <i class="fa-solid fa-microphone"></i> Click to Speak & Score
+                            </button>
+                            <div class="accuracy-meter mt-4" style="height: 12px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden;">
+                                <div class="fill" id="pronunciation-meter-fill" style="width: 0%; height: 100%; background: var(--primary); transition: width 0.6s ease, background 0.3s ease;"></div>
+                            </div>
+                            <p class="status-msg text-muted mt-4" id="pronunciation-status-msg">Click above to speak and test your pronunciation accuracy.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/static/app.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

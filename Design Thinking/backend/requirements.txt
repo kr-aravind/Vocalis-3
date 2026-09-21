@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+python-multipart
+httpx
+supabase
+python-dotenv
+google-api-python-client
+gunicorn
+groq
+boto3
