@@ -2,8 +2,8 @@ from fastapi import APIRouter, Request, HTTPException
 import json
 import re
 
-from ..utils.groq import chat_completion
-from ..utils.supabase_client import safe_db_insert
+from utils.groq import chat_completion
+from utils.supabase_client import safe_db_insert
 
 router = APIRouter()
 
