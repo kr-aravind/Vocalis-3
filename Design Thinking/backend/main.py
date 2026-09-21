@@ -24,7 +24,7 @@ app.include_router(pronunciation.router, prefix="/api")
 app.include_router(upload.router, prefix="/api")
 
 # Serve static assets from project root
-static_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+static_dir = os.path.abspath(os.path.join(os.path.dirname(__file__)))
 app.mount("/static", StaticFiles(directory=static_dir, html=False), name="static")
 
 # Root endpoint serves index.html
