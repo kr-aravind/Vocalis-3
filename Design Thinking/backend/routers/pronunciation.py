@@ -3,8 +3,8 @@ import os
 import tempfile
 import random
 from typing import Optional
-from ..utils.supabase_client import upload_file, safe_db_insert
-from ..utils.groq import transcribe_audio
+from utils.supabase_client import upload_file, safe_db_insert
+from utils.groq import transcribe_audio
 
 router = APIRouter()
 
